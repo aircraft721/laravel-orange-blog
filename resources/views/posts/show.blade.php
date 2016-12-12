@@ -10,21 +10,35 @@
 
             <p class="lead">{{ $post->body }}</p>
 
+
+
         </div>
 
         <div class="col-md-4">
             <div class="well">
 
                 <dl class="dl-horizontal">
-                    <dt>Created At:</dt>
-                    <dd>{{ $post->created_at->diffForHumans() }}</dd>
+                    <label>Url:</label>
+                    <p><a href="{{ route('blog.single', $post->slug) }}">{{ route('blog.single', $post->slug) }}</a></p>
                 </dl>
 
                 <dl class="dl-horizontal">
-                    <dt>Last Updated:</dt>
-                    <dd>{{ $post->updated_at->diffForHumans() }}</dd>
+                    <label>Created At:</label>
+                    <p>{{ $post->created_at->diffForHumans() }}</p>
+                </dl>
+
+                <dl class="dl-horizontal">
+                    <label>Last Updated:</label>
+                    <p>{{ $post->updated_at->diffForHumans() }}</p>
                 </dl>
                 <hr>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="/posts" class="btn btn-default btn-block bt1">Back to Posts</a>
+                    </div>
+                    <hr>
+                </div>
 
                 <div class="row">
                     <div class="col-sm-6">
