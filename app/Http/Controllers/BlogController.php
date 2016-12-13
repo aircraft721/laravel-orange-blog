@@ -9,6 +9,12 @@ use App\Http\Requests;
 
 class BlogController extends Controller
 {
+    public function getIndex(){
+        $posts = Post::paginate(3);
+        return view('blog.index')->withPosts($posts);
+    }
+
+
     public function getSingle($slug){
         //fetch from the DB based on slud
         $post = Post::where('slug','=', $slug)->first();
