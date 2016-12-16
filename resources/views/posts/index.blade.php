@@ -36,7 +36,7 @@
                         <tr>
                             <th>{{ $post->id }}</th>
                             <td>{{ $post->title }}</td>
-                            <td>{{ str_limit($post->body,25) }}{{ strlen($post->body)>50 ? '...' : '' }}</td>
+                            <td>{{ str_limit(strip_tags($post->body),25) }}{{ strlen($post->body)>50 ? '...' : '' }}</td>
                             <td>{{ $post->created_at->diffForHumans() }}</td>
                             <td><a href="{{ route('posts.show', $post->id) }}" class="btn btn-default btn-sm">View</a> <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-default btn-sm">Edit</a></td>
                         </tr>

@@ -17,7 +17,7 @@
             <h2>{{ $post->title }}</h2>
             <h5>Published: {{ $post->created_at->diffForHumans() }}</h5>
 
-            <p>{{ str_limit($post->body,300) }}{{ strlen($post->body)>300 ? '...' : '' }}</p>
+            <p>{{ str_limit(strip_tags($post->body),300) }}{{ strlen(strip_tags(($post->body))>300 ? '...' : '' }}</p>
 
             <a href="{{ route('blog.single', $post->slug) }}" class="btn btn-primary">Read More</a>
             <hr>
