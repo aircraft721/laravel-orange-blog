@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Session;
 use App\Http\Requests;
 use App\Tag;
+use Purifier;
+use Image;
 
 class PostController extends Controller
 {
@@ -61,6 +63,8 @@ class PostController extends Controller
             'title'=>'required|max:255',
             'slug'=>'required|alpha_dash|min:5|max:25|unique:posts,slug',
             'category_id'=>'required|numeric',
+            'body'=>'required',
+            'featured_image'=>'sometimes|image'
 
 
         ));
@@ -71,7 +75,17 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->category_id = $request->category_id;
-        $post->body = $request->body;
+        $post->body = Purifier::clean($request->body);
+
+        //save our image
+        if($request->hasFile('featured_image')){
+            $image = $request->file('featured_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+            Image::make($image)->resize(800,400)->save($location);
+
+            $post->image = $filename;
+        }
 
         $post->save();
 
@@ -157,7 +171,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug');
         $post->category_id = $request->input('category_id');
-        $post->body = $request->input('body');
+        $post->body = Purifier::clean($request->input('body'));
         $post->save();
 
         if (isset($request->tags)){
